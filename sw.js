@@ -1,10 +1,9 @@
-const CACHE_NAME = 'tracker-v2';
+const CACHE_NAME = 'tracker-v3';
 const BASE = '/home-tracker';
 const ASSETS = [
   BASE + '/',
   BASE + '/index.html',
-  BASE + '/manifest.json',
-  BASE + '/sw.js'
+  BASE + '/manifest.json'
 ];
 
 // ─── Install: cache all assets immediately ────────────────────────────────
