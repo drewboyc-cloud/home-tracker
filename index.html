@@ -556,7 +556,7 @@ function renderSheet(id) {
   }
 
   const intervalRow = (!isCondo && !isLogOnly && item.intervalDays)
-    ? `<div class="sheet-info-row"><span class="sheet-info-label">Interval</span><span class="sheet-info-value">Every ${item.intervalDays} days</span></div>` : '';
+    ? `<div class="sheet-info-row"><span class="sheet-info-label">Interval</span><span class="sheet-info-value" onclick="editInterval('${id}')" style="text-decoration:underline dotted;cursor:pointer;" title="Tap to change">Every ${item.intervalDays} days ✏️</span></div>` : '';
 
   let actionBtns = '';
   if (isCondo) {
@@ -1160,6 +1160,18 @@ function init() {
   document.addEventListener('visibilitychange', () => {
     if (!document.hidden) scheduleNotifications();
   });
+}
+
+function editInterval(id) {
+  const item = appData.items[id];
+  const input = prompt(`New interval for "${item.title}" (days):`, item.intervalDays);
+  if (input === null) return;
+  const days = parseInt(input, 10);
+  if (isNaN(days) || days < 1) { alert('Enter a valid number of days (e.g. 60).'); return; }
+  item.intervalDays = days;
+  if (item.lastDone) item.nextDue = addDays(item.lastDone, days);
+  saveData();
+  renderSheet(id);
 }
 
 document.addEventListener('DOMContentLoaded', init);
